@@ -15,6 +15,12 @@ Quality goals:
 
 **Status:** Not scaffolded yet (no `package.json`). Create layout and files exactly as specified when scaffolding.
 
+## Code index
+
+`INDEXES.csv` at the repo root lists every package, plus the key docs, scripts and deploy files. Its columns are `path,kind,purpose,key_symbols,used_by,tests,decisions`. Read it before searching the tree.
+
+When you add, remove or rename a package, or change its purpose or key symbols, update its row in the same commit.
+
 ## Architecture & Commands
 
 Config lives at `config/playwright.config.ts` (all raw CLI calls require `-c config/playwright.config.ts`).
@@ -109,7 +115,15 @@ F: <Feature name>
 - **Post-conditions (API Teardown):** API cleanup call
 ```
 
+## Definition of Done for Merging to Main
+
+1. **Plan & Summary Completion:** All tasks in the execution plan (`.claude/plans/<plan>.md` or `.agent/plans/<plan>.md`) are complete, and `docs/plans/<plan>-summary.md` reflects the actual build; any steps deviating from "Expected" have been reported and resolved.
+2. **All Green:** Both `npm run lint` and all test suites (`typecheck`, `test:unit`, `test`) pass cleanly.
+3. **No Critical / Important Findings:** Zero unresolved Critical or Important findings; all Minor findings are formally documented in the plan or docs.
+4. **Go-Live Readiness in PR:** PR description clearly states the readiness level and any remaining items required before production go-live.
+
 ## Domain Gotchas
 
 - Keep UI labels, button names, and specialized terms in their original language.
-- Local plans belong in `.claude/plans/` or `.agent/plans/` (both gitignored). Never put plans in `docs/`.
+- Local plans belong in `.claude/plans/` or `.agent/plans/` (both gitignored). Never put execution plans in `docs/`; summary reports belong in `docs/plans/<plan>-summary.md`.
+- `INDEXES.csv` stores index entries for persistent code and doc files only. Never index transient `.local/` files.
